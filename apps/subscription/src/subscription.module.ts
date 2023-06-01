@@ -3,6 +3,7 @@ import { SubscriptionController } from './subscription.controller';
 import { SubscriptionService } from './subscription.service';
 import { ConfigModule } from '@nestjs/config';
 import Joi from 'joi';
+import { DatabaseModule } from '@app/database';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import Joi from 'joi';
       }),
       envFilePath: './apps/subscription/.env',
     }),
+    DatabaseModule,
   ],
   controllers: [SubscriptionController],
   providers: [SubscriptionService],
