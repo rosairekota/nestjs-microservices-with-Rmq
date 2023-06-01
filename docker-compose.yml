@@ -1,5 +1,23 @@
 version: '3'
 services:
+  app-subscription:
+    build: 
+      context: .
+      dockerfile: ./apps/subscription/Dockerfile
+      target: development
+    command: npm run start:dev subscription
+    env_file:
+      - ./apps/subscription/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '4500:4500'
+    
   mongodb-primary:
     image: 'bitnami/mongodb:latest'
     environment:
