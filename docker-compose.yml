@@ -17,7 +17,27 @@ services:
       - /usr/src/app/node_modules
     ports:
       - '4500:4500'
-    
+  app-subscription-type:
+    build: 
+      context: .
+      dockerfile: ./apps/subscription_type/Dockerfile
+      target: development
+    command: npm run start:dev subscription_type
+    env_file: 
+      - ./apps/subscription_type/.env
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - 5432:5432
+
   mongodb-primary:
     image: 'bitnami/mongodb:latest'
     environment:

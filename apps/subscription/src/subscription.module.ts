@@ -7,6 +7,7 @@ import { DatabaseModule } from '@app/database';
 import { SubscriptionRepisitory } from './repository/subscription.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Subscription, SubscriptionSchema } from './schema/subscription.schema';
+import { RmqModule, SUBSCRIPTION_TYPE_SERVICE } from '@app/rmq';
 
 @Module({
   imports: [
@@ -25,6 +26,9 @@ import { Subscription, SubscriptionSchema } from './schema/subscription.schema';
         schema: SubscriptionSchema,
       },
     ]),
+    RmqModule.register({
+      name: SUBSCRIPTION_TYPE_SERVICE,
+    }),
   ],
   controllers: [SubscriptionController],
   providers: [SubscriptionService, SubscriptionRepisitory],
